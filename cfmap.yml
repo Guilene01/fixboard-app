@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fixboard-backend-config
+  namespace: fixboard
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  UPLOADS_DIR: "/app/uploads"
+  JWT_EXPIRES_IN: "7d"

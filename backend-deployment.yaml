@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: fixboard
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      serviceAccountName: fixboard-secrets-sa
+      containers:
+        - name: backend
+          image: 885684264653.dkr.ecr.us-east-1.amazonaws.com/fixboard-backend:v1
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: fixboard-backend-config
+            - secretRef:
+                name: fixboard-backend-secrets
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+            - name: secrets-store
+              mountPath: /mnt/secrets-store
+              readOnly: true
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: fixboard-uploads-pvc
+        - name: secrets-store
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: fixboard-backend-secrets-spc

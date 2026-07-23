@@ -1,0 +1,33 @@
+# Single rule to frontend-service: the frontend's nginx.conf reverse-proxies
+# /api/ to backend-service internally (stripping the /api prefix), so the
+# ALB itself never needs to know about the backend's real routes (/auth,
+# /posts, /tags, etc). This also avoids /posts colliding with the SPA's
+# own /posts/new and /posts/:id client-side routes, since the app now
+# calls the API under /api/* — a different path space entirely.
+#
+# Requires the frontend image to be built with VITE_API_URL=/api (the
+# Dockerfile's new default) — see frontend/Dockerfile and frontend/nginx.conf.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fixboard-ingress
+  namespace: fixboard
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:885684264653:certificate/44e1d2bf-3765-4be8-ab29-63cb0e8734d3
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+spec:
+  rules:
+    - host: fixboard.gamela.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80

@@ -85,6 +85,8 @@ docker-compose.yml
 .env.example
 ```
 
+For running this on Kubernetes (EKS) instead, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
 For day-to-day frontend/backend development (hot reload, debugging one
 service in isolation) see the README in each subdirectory — Compose is
 the "run the whole thing like production" path, not the dev loop.
