@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Light theme (default) — off-white/white, near-black text, amber/gold accent */
+  --color-bg: #fafaf9;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f5f5f4;
+  --color-border: #e7e5e4;
+  --color-border-hover: #d6d3d1;
+
+  --color-text: #1c1917;
+  --color-text-muted: #78716c;
+  --color-text-faint: #a8a29e;
+
+  --color-accent: #b45309;
+  --color-accent-hover: #92400e;
+  --color-accent-muted: #fef3c7;
+
+  --color-open: #b45309;
+  --color-open-muted: #fef3c7;
+  --color-solved: #15803d;
+  --color-solved-muted: #dcfce7;
+  --color-danger: #b91c1c;
+  --color-danger-muted: #fee2e2;
+}
+
+/* Dark theme — the Task 2 dark-indigo palette, reused as-is for the toggle */
+[data-theme='dark'] {
+  --color-bg: #0a0e14;
+  --color-surface: #121820;
+  --color-surface-raised: #171f29;
+  --color-border: #232c38;
+  --color-border-hover: #2f3949;
+
+  --color-text: #e6edf3;
+  --color-text-muted: #8b98a8;
+  --color-text-faint: #5c6b7a;
+
+  --color-accent: #7c6ef2;
+  --color-accent-hover: #9186f5;
+  --color-accent-muted: #7c6ef21a;
+
+  --color-open: #f59e0b;
+  --color-open-muted: #f59e0b1a;
+  --color-solved: #22c55e;
+  --color-solved-muted: #22c55e1a;
+  --color-danger: #f0546a;
+  --color-danger-muted: #f0546a1a;
+
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: white;
+  }
+}
+
+@layer components {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-hover) transparent;
+  }
+}
