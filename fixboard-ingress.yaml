@@ -17,11 +17,11 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:885684264653:certificate/44e1d2bf-3765-4be8-ab29-63cb0e8734d3
+    alb.ingress.kubernetes.io/certificate-arn: <your-acm-certificate-arn>
     alb.ingress.kubernetes.io/ssl-redirect: "443"
 spec:
   rules:
-    - host: fixboard.gamela.shop
+    - host: <your-domain>  # e.g. fixboard.example.com
       http:
         paths:
           - path: /

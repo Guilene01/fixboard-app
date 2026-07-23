@@ -16,7 +16,7 @@ spec:
       serviceAccountName: fixboard-secrets-sa
       containers:
         - name: backend
-          image: 885684264653.dkr.ecr.us-east-1.amazonaws.com/fixboard-backend:v1
+          image: <ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/fixboard-backend:v1
           ports:
             - containerPort: 3000
           envFrom:

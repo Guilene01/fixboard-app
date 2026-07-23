@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 885684264653.dkr.ecr.us-east-1.amazonaws.com/fixboard-frontend:v2
+          image: <ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/fixboard-frontend:v2
           ports:
             - containerPort: 80
